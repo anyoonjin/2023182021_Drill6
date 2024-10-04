@@ -27,9 +27,8 @@ def set_direction():
 
 
 p1=[400, 300]
-#while (True):
-for i in range(0,5):
-        #clear_canvas()
+frame=0
+while (True):
     h_x,h_y=hand_setting()
     p2 = [h_x, h_y]
 
@@ -47,14 +46,15 @@ for i in range(0,5):
             back.draw(400, 300)
             hand.draw(h_x, h_y)
             y = a * x + b
-            cha.clip_composite_draw(0, 0, 100, 100,0,dir, x, y,100,100)
+            cha.clip_composite_draw(frame*100, 0, 100, 100,0,dir, x, y,100,100)
             update_canvas()
-            delay(0.2)
+            frame = (frame + 1) % 8
+            delay(0.05)
     else:
         if p1[1] > p2[1]:
-            move_s = -10
+            move_s = -5
         elif p1[1] < p2[1]:
-            move_s = 10
+            move_s = 5
         else:
             move_s = 0
 
@@ -62,14 +62,12 @@ for i in range(0,5):
             clear_canvas()
             back.draw(400, 300)
             hand.draw(h_x, h_y)
-            cha.clip_composite_draw(0, 0, 100, 100,0,'h', p1[0], y,100,100)  # x는 고정, y만 이동
+            cha.clip_composite_draw(frame*100, 0, 100, 100,0,dir, p1[0], y,100,100)  # x는 고정, y만 이동
             update_canvas()
-            delay(0.02)
+            frame = (frame + 1) % 8
+            delay(0.05)
 
     p1=[p2[0],p2[1]]
-
-        #update_canvas()
-    delay(1)
 
 
 close_canvas()
