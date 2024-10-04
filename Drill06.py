@@ -11,22 +11,65 @@ def hand_setting():
     h_y=random.randint(0,560)
     return h_x,h_y
 
-def char_running():
-    pass
+def char_running(p1,p2):
+
+    x1, y1 = p1
+    x2, y2 = p2
+    if x1==x2:
+        return None,None
+    a = (y2 - y1) / (x2 - x1)
+    b = y1 - x1 * a
+    return a,b
+
 
 def set_direction():
     pass
 
 
-
+p1=[400, 300]
 #while (True):
 for i in range(0,5):
-        clear_canvas()
-        h_x,h_y=hand_setting()
-        back.draw(400, 300)
-        hand.draw(h_x, h_y)
-        update_canvas()
-        delay(1)
+        #clear_canvas()
+    h_x,h_y=hand_setting()
+    p2 = [h_x, h_y]
+
+    a,b=char_running(p1, p2)
+
+    if (p1[0] > p2[0]):
+        dir=' '
+        move_s = -10
+    elif (p1[0] < p2[0]):
+        dir='h'
+        move_s = 10
+    if a is not None:
+        for x in range(p1[0], p2[0] + move_s , move_s):
+            clear_canvas()
+            back.draw(400, 300)
+            hand.draw(h_x, h_y)
+            y = a * x + b
+            cha.clip_composite_draw(0, 0, 100, 100,0,dir, x, y,100,100)
+            update_canvas()
+            delay(0.2)
+    else:
+        if p1[1] > p2[1]:
+            move_s = -10
+        elif p1[1] < p2[1]:
+            move_s = 10
+        else:
+            move_s = 0
+
+        for y in range(p1[1], p2[1] + move_s, move_s):
+            clear_canvas()
+            back.draw(400, 300)
+            hand.draw(h_x, h_y)
+            cha.clip_composite_draw(0, 0, 100, 100,0,'h', p1[0], y,100,100)  # x는 고정, y만 이동
+            update_canvas()
+            delay(0.02)
+
+    p1=[p2[0],p2[1]]
+
+        #update_canvas()
+    delay(1)
 
 
 close_canvas()
